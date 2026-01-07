@@ -1,1333 +1,668 @@
 <!DOCTYPE html>
-
 <html lang="es">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>PATAGONIA LEGAL GROUP | LÍDERES EN DERECHO</title>
-
     
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
-
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-
-
     <style>
-
         /* --- 1. VARIABLES Y BASE --- */
-
         :root {
-
             --bg-dark: #0a0e17;
-
             --bg-card: #111826;
-
             --gold-primary: #d4af37;
-
             --gold-light: #f3e5ab;
-
             --text-main: #e2e8f0;
-
             --text-muted: #94a3b8;
-
             --font-heading: 'Cinzel', serif;
-
             --font-body: 'Lato', sans-serif;
-
         }
-
-
 
         body, html {
-
             margin: 0; padding: 0;
-
             font-family: var(--font-body);
-
             background-color: var(--bg-dark);
-
             color: var(--text-main);
-
             overflow-x: hidden;
-
             scroll-behavior: smooth;
-
         }
-
-
 
         h1, h2, h3, h4 {
-
             font-family: var(--font-heading);
-
             text-transform: uppercase;
-
             letter-spacing: 2px;
-
             margin: 0;
-
         }
-
-
 
         h2 span {
-
             background: linear-gradient(135deg, var(--gold-light), var(--gold-primary));
-
             -webkit-background-clip: text;
-
             -webkit-text-fill-color: transparent;
-
         }
-
-
 
         p { line-height: 1.8; color: var(--text-muted); font-weight: 300; }
-
         ul { list-style: none; padding: 0; margin: 0; }
-
         
-
         .container { max-width: 1200px; margin: auto; padding: 0 24px; position: relative; z-index: 2; }
 
-
-
         /* --- 2. HEADER --- */
-
         .main-header {
-
             position: fixed; top: 0; width: 100%; z-index: 1000;
-
             padding: 20px 0; transition: all 0.4s ease;
-
             background: rgba(10, 14, 23, 0.2);
-
             backdrop-filter: blur(0px);
-
         }
-
         
-
         .main-header.scrolled {
-
             background: rgba(10, 14, 23, 0.95);
-
             backdrop-filter: blur(12px);
-
             padding: 12px 0;
-
             border-bottom: 1px solid rgba(212, 175, 55, 0.2);
-
         }
-
-
 
         .header-content { display: flex; justify-content: space-between; align-items: center; }
 
-
-
         .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: white; }
-
         .logo-img { height: 45px; width: auto; filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.3)); }
-
         .logo-text { font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; letter-spacing: 3px; line-height: 1; }
-
         .logo-text span { color: var(--gold-primary); display: block; font-size: 0.8rem; letter-spacing: 6px; font-weight: 400; margin-top: 4px; }
 
-
-
         .nav-links { display: flex; gap: 30px; }
-
         .nav-links a { 
-
             text-decoration: none; color: var(--text-main); 
-
             font-size: 0.8rem; font-weight: 400; text-transform: uppercase; letter-spacing: 2px;
-
             position: relative; transition: 0.3s;
-
         }
-
         .nav-links a:hover { color: var(--gold-primary); }
-
         .menu-toggle { display: none; color: var(--gold-primary); font-size: 1.5rem; cursor: pointer; }
 
-
-
         /* --- 3. HERO SECTION (MULTI VIDEO) --- */
-
         #inicio { position: relative; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
 
-
-
         /* Estilo base para todos los videos */
-
         .video-bg {
-
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;
-
             z-index: 0; filter: brightness(0.35) contrast(1.1);
-
             opacity: 0; /* Ocultos por defecto */
-
             transition: opacity 1s ease-in-out; /* Transición suave */
-
         }
-
-
 
         /* Clase para mostrar el video activo */
-
         .video-bg.active {
-
             opacity: 1;
-
         }
-
-
 
         /* FLECHAS DE NAVEGACIÓN - EXTREMOS */
-
         .slider-arrow {
-
             position: absolute;
-
             top: 50%;
-
             transform: translateY(-50%);
-
             z-index: 20;
-
             font-size: 3.5rem;
-
             color: rgba(255,255,255,0.2);
-
             cursor: pointer;
-
             padding: 20px;
-
             transition: all 0.3s ease;
-
         }
-
         .slider-arrow:hover { color: var(--gold-primary); background: rgba(0,0,0,0.3); }
-
         .arrow-left { left: 10px; }
-
         .arrow-right { right: 10px; }
 
-
-
         .hero-content {
-
             position: relative; z-index: 10; text-align: center; max-width: 900px;
-
             margin: 0 60px; /* Margen para que no toque las flechas */
-
             opacity: 1; transition: opacity 0.5s ease-in-out;
-
         }
-
         .hero-content.fade-out { opacity: 0; }
 
-
-
         .hero-badge {
-
             display: inline-block; padding: 8px 16px; 
-
             border: 1px solid rgba(255,255,255,0.2); border-radius: 50px;
-
             font-size: 0.75rem; text-transform: uppercase; letter-spacing: 3px; color: var(--gold-primary);
-
             margin-bottom: 20px; backdrop-filter: blur(5px);
-
         }
-
-
 
         .hero-title {
-
             font-size: 4.5rem; line-height: 1.1; margin-bottom: 20px;
-
             background: linear-gradient(to bottom, #fff, #aebacf);
-
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-
             text-shadow: 0 10px 40px rgba(0,0,0,0.5);
-
         }
-
-
 
         .hero-subtitle { font-size: 1.4rem; letter-spacing: 1px; color: #cbd5e1; margin-bottom: 40px; font-weight: 300; font-family: 'Playfair Display', serif; font-style: italic; }
 
-
-
         .btn-gold {
-
             display: inline-block; padding: 16px 45px;
-
             background: transparent; color: var(--gold-primary);
-
             border: 1px solid var(--gold-primary);
-
             text-decoration: none; text-transform: uppercase; letter-spacing: 3px; font-size: 0.85rem; font-weight: bold;
-
             transition: all 0.3s ease;
-
         }
-
         .btn-gold:hover { background: var(--gold-primary); color: #000; box-shadow: 0 0 30px rgba(212, 175, 55, 0.4); }
 
-
-
         .mountain-divider {
-
             position: absolute; bottom: 0; left: 0; width: 100%;
-
             line-height: 0; z-index: 5; pointer-events: none;
-
         }
-
         .mountain-divider svg { width: calc(130% + 1.3px); height: 120px; transform: translateX(-15%); }
-
         .mountain-divider .shape-fill { fill: var(--bg-dark); }
 
-
-
         /* --- SECCIONES GENERALES --- */
-
         .section { padding: 100px 0; }
-
         .section-header { text-align: center; margin-bottom: 60px; }
-
         .section-header h2 { font-size: 2.5rem; color: #fff; margin-bottom: 15px; }
-
         .section-separator { width: 60px; height: 3px; background: var(--gold-primary); margin: 0 auto; }
 
-
-
         /* --- ESTADÍSTICAS --- */
-
         .stats-row { display: flex; justify-content: center; gap: 50px; flex-wrap: wrap; margin-top: 30px; }
-
         .stat-item { text-align: center; min-width: 120px; }
-
         .stat-number { font-size: 3rem; font-family: var(--font-heading); color: var(--gold-primary); display: block; }
-
         .stat-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); }
 
-
-
         /* --- NUEVA SECCIÓN: CASOS CORPORATIVOS --- */
-
         .cases-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-
         
-
         .case-card {
-
             background: #111; position: relative; height: 250px; overflow: hidden;
-
             border: 1px solid rgba(255,255,255,0.1); cursor: pointer;
-
         }
-
         
-
         .case-card img {
-
             width: 100%; height: 100%; object-fit: cover; opacity: 0.5;
-
             transition: transform 0.6s ease;
-
         }
-
         .case-content {
-
             position: absolute; bottom: 0; left: 0; width: 100%; padding: 30px;
-
             background: linear-gradient(to top, #000, transparent);
-
             box-sizing: border-box;
-
         }
-
         .case-tag {
-
             color: var(--gold-primary); font-size: 0.7rem; letter-spacing: 2px; font-weight: bold; text-transform: uppercase;
-
         }
-
         .case-title {
-
             color: #fff; font-size: 1.5rem; margin-top: 5px; font-family: var(--font-heading);
-
         }
-
         .case-desc {
-
             color: #ccc; font-size: 0.9rem; margin-top: 5px; max-height: 0; overflow: hidden; transition: 0.4s ease; opacity: 0;
-
         }
-
         .case-card:hover img { transform: scale(1.1); opacity: 0.3; }
-
         .case-card:hover .case-desc { max-height: 100px; opacity: 1; margin-top: 10px; }
-
         .case-card:hover { border-color: var(--gold-primary); }
 
 
-
-
-
         /* --- EQUIPO (CON PUNTITOS DE ESPECIALIDADES) --- */
-
         .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-
         .team-card {
-
             background: var(--bg-card); position: relative; cursor: pointer;
-
             transition: transform 0.4s ease, box-shadow 0.4s ease;
-
             border: 1px solid rgba(255,255,255,0.03);
-
             display: flex; flex-direction: column;
-
         }
-
         .team-card:hover { transform: translateY(-10px); box-shadow: 0 20px 50px rgba(0,0,0,0.4); border-color: rgba(212, 175, 55, 0.3); }
-
         .card-image-wrapper { overflow: hidden; height: 350px; position: relative; }
-
         .card-image-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s ease; filter: grayscale(100%); }
-
         .team-card:hover .card-image-wrapper img { transform: scale(1.05); filter: grayscale(0%); }
-
         
-
         .card-details { padding: 25px; text-align: center; border-bottom: 2px solid transparent; transition: 0.3s; flex-grow: 1; }
-
         .team-card:hover .card-details { border-bottom-color: var(--gold-primary); }
-
         .card-details h4 { color: #fff; font-size: 1.4rem; margin-bottom: 5px; font-family: var(--font-heading); }
-
         .card-details .role { color: var(--gold-primary); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; font-weight: bold; }
-
         
-
         /* ESTILO DE LA LISTA DE ESPECIALIDADES (PUNTITOS) */
-
         .team-skills {
-
             text-align: left;
-
             margin-top: 15px;
-
             padding-top: 15px;
-
             border-top: 1px solid rgba(255,255,255,0.1);
-
             padding-left: 10px;
-
         }
-
         .team-skills li {
-
             font-size: 0.9rem;
-
             color: #ccc;
-
             margin-bottom: 5px;
-
             position: relative;
-
             padding-left: 15px;
-
         }
-
         .team-skills li::before {
-
             content: '•';
-
             color: var(--gold-primary);
-
             position: absolute;
-
             left: 0;
-
             font-weight: bold;
-
         }
-
-
-
 
 
         /* --- ÁREAS DE PRÁCTICA (DETALLADO) --- */
-
         .practice-grid {
-
             display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; padding: 0 15px;
-
         }
-
         .practice-item {
-
             position: relative; height: 350px; overflow: hidden; background: #000;
-
             border: 1px solid rgba(255,255,255,0.1); cursor: pointer;
-
         }
-
         .practice-item img {
-
             width: 100%; height: 100%; object-fit: cover; opacity: 0.6; transition: all 0.6s;
-
         }
-
         .practice-overlay {
-
             position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
-
             background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.2));
-
             display: flex; flex-direction: column; justify-content: flex-end;
-
             padding: 30px; box-sizing: border-box; transition: all 0.4s ease;
-
         }
-
         .practice-title {
-
             color: #fff; font-family: var(--font-heading); font-size: 1.5rem; 
-
             border-left: 3px solid var(--gold-primary); padding-left: 15px; margin-bottom: 10px; transition: 0.3s;
-
         }
-
         .practice-list { max-height: 0; opacity: 0; overflow: hidden; transition: all 0.5s ease; }
-
         .practice-list li { color: #ccc; font-size: 0.9rem; margin-bottom: 6px; position: relative; padding-left: 15px; }
-
         .practice-list li::before { content: '•'; color: var(--gold-primary); position: absolute; left: 0; }
-
         
-
         .practice-item:hover img { opacity: 0.2; transform: scale(1.1); }
-
         .practice-item:hover .practice-list { max-height: 200px; opacity: 1; margin-top: 15px; }
-
         .practice-item:hover .practice-title { color: var(--gold-primary); padding-left: 20px; }
 
-
-
         /* --- CONTACTO & WHATSAPP --- */
-
         .contact-wrap { background: #05080f; padding: 80px 0; border-top: 1px solid rgba(255,255,255,0.05); }
-
         input, textarea {
-
             width: 100%; box-sizing: border-box; font-family: var(--font-body);
-
             background: rgba(255,255,255,0.05); border: 1px solid #333; padding: 15px; 
-
             color: white; outline: none; transition: 0.3s;
-
         }
-
         input:focus, textarea:focus { border-color: var(--gold-primary); background: rgba(255,255,255,0.1); }
 
-
-
         .whatsapp-float {
-
             position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
-
             background-color: #25d366; color: #FFF; border-radius: 50%;
-
             text-align: center; font-size: 30px; box-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-
             z-index: 1000; display: flex; align-items: center; justify-content: center;
-
             text-decoration: none; transition: all 0.3s ease;
-
         }
-
         .whatsapp-float:hover { background-color: #20ba5a; transform: scale(1.1); }
 
-
-
         /* --- MODAL --- */
-
         .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; z-index:2000; justify-content:center; align-items:center; background: rgba(5, 8, 15, 0.9); backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.3s ease; }
-
         .modal-content { background:#0a0e17; width:90%; max-width:900px; display:flex; position:relative; border: 1px solid var(--gold-primary); box-shadow: 0 0 50px rgba(0,0,0,0.8); }
 
-
-
         /* --- RESPONSIVIDAD --- */
-
         @media (max-width: 900px) {
-
             .practice-grid, .cases-grid { grid-template-columns: repeat(2, 1fr); }
-
             .hero-title { font-size: 3.5rem; }
-
             .arrow-left { left: 0; }
-
             .arrow-right { right: 0; }
-
         }
-
         @media (max-width: 768px) {
-
             .nav-links { display: none; }
-
             .menu-toggle { display: block; }
-
             .hero-title { font-size: 2.2rem; }
-
             .practice-grid, .cases-grid { grid-template-columns: 1fr; }
-
             .modal-content { flex-direction: column; max-height: 90vh; overflow-y: auto; }
-
             .modal-content > div:first-child { width: 100%; height: 250px; }
-
             .slider-arrow { font-size: 2rem; padding: 10px; background: rgba(0,0,0,0.2); }
-
         }
-
     </style>
-
 </head>
-
 <body>
 
-
-
     <a href="https://wa.me/542975150438" class="whatsapp-float" target="_blank">
-
         <i class="fab fa-whatsapp"></i>
-
     </a>
 
-
-
     <header class="main-header">
-
         <div class="container header-content">
-
             <a href="#" class="logo">
-
-                <img src="andes.png" alt="Logo" class="logo-img" style="opacity: 0.8;">
-
+                <img src="ansess.png" alt="Logo" class="logo-img" style="opacity: 0.8;">
                 <div class="logo-text">PATAGONIA <span>LEGAL GROUP</span></div>
-
             </a>
-
             <nav class="nav-links">
-
                 <a href="#estudio">El Estudio</a>
-
                 <a href="#casos">Trayectoria</a>
-
                 <a href="#equipo">Profesionales</a>
-
                 <a href="#ramas">Expertise</a>
-
                 <a href="#contacto">Contacto</a>
-
             </nav>
-
             <div class="menu-toggle"><i class="fas fa-bars"></i></div>
-
         </div>
-
     </header>
 
-
-
     <section id="inicio">
-
         <video id="vid-0" class="video-bg active" autoplay muted loop playsinline>
-
             <source src="penal.mp4" type="video/mp4">
-
         </video>
-
         
-
         <video id="vid-1" class="video-bg" autoplay muted loop playsinline>
-
             <source src="uba derecho.mp4" type="video/mp4">
-
         </video>
-
-
 
         <video id="vid-2" class="video-bg" autoplay muted loop playsinline>
-
             <source src="estudio.mp4" type="video/mp4">
-
         </video>
-
         
-
         <i class="fa-solid fa-chevron-left slider-arrow arrow-left" onclick="changeSlide(-1)"></i>
-
         <i class="fa-solid fa-chevron-right slider-arrow arrow-right" onclick="changeSlide(1)"></i>
 
-
-
         <div class="hero-content" id="hero-text-container">
-
             <div class="hero-badge">BUENOS AIRESS, CABA CHUBUT, SANTA CRUZ Y TIERRA DEL FUEGO </div>
-
             <h1 class="hero-title" id="hero-title">DERECHO<br>PENAL</h1>
-
             <p class="hero-subtitle" id="hero-subtitle">Preparacion de jucios y defensa  por jurado para proteger tu libertad.</p>
-
             <a href="#contacto" class="btn-gold">Consultar Ahora</a>
-
         </div>
-
-
 
         <div class="mountain-divider">
-
             <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-
                 <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill" fill="#0a0e17" transform="scale(1, -1) translate(0, -120)"></path>
-
             </svg>
-
         </div>
-
     </section>
-
-
 
     <section id="estudio" class="section">
-
         <div class="container">
-
             <div class="section-header">
-
                 <h2>NUESTRA <span>TRAYECTORIA</span></h2>
-
                 <div class="section-separator"></div>
-
             </div>
-
             <div style="text-align:center; max-width: 800px; margin: auto;">
-
                 <p style="font-size: 1.2rem; color: #fff;">
-
                     En <strong>Patagonia Legal Group</strong>, no gestionamos expedientes; gestionamos soluciones estratégicas. Nuestra firma ha sido protagonista en los procesos de reestructuración corporativa más importantes de la región patagónica.
-
                 </p>
-
                 <div class="stats-row">
-
                     <div class="stat-item"><span class="stat-number">12+</span><span class="stat-label">Años de Exp.</span></div>
-
                     <div class="stat-item"><span class="stat-number">6K+</span><span class="stat-label">Casos Cerrados</span></div>
-
                 </div>
-
             </div>
-
         </div>
-
     </section>
-
-
 
     <section id="casos" class="section" style="background: #0d121d;">
-
         <div class="container">
-
             <div class="section-header">
-
                 <h2>CASOS DE <span>ALTO PERFIL</span></h2>
-
                 <div class="section-separator"></div>
-
                 <p>Experiencia comprobada en litigio complejo y reestructuraciones masivas.</p>
-
             </div>
-
-
 
             <div class="cases-grid">
-
                 <div class="case-card">
-
                     <img src="https://images.pexels.com/photos/257700/pexels-photo-257700.jpeg?auto=compress&cs=tinysrgb&w=800" alt="YPF Retiros">
-
                     <div class="case-content">
-
                         <div class="case-tag">SANTA CRUZ & CHUBUT</div>
-
                         <div class="case-title">YPF: Retiro Cuenca</div>
-
                         <div class="case-desc">Asesoramiento integral y representación en los retiros voluntarios masivos por la salida de YPF de la cuenca petrolera.</div>
-
                     </div>
-
                 </div>
 
-
-
                 <div class="case-card">
-
                     <img src="Aerolineas-Argentinas-Ushuaia-1.jpg"Aerolíneas Argentinas">
-
                     <div class="case-content">
-
                         <div class="case-tag">REESTRUCTURACIÓN</div>
-
                         <div class="case-title">Aerolíneas Argentinas</div>
-
                         <div class="case-desc">Negociación de acuerdos de salida y defensa de derechos laborales en procesos de reestructuración de la aerolínea de bandera.</div>
-
                     </div>
-
                 </div>
 
-
-
                 <div class="case-card">
-
                     <img src="LATAM AVION.JPG" alt="LATAM">
-
                     <div class="case-content">
-
                         <div class="case-tag">CIERRE DE OPERACIONES</div>
-
                         <div class="case-title">LATAM Argentina</div>
-
                         <div class="case-desc">Gestión estratégica de indemnizaciones y retiros voluntarios tras el cese de operaciones de LATAM en el país.</div>
-
                     </div>
-
                 </div>
-
-
 
                 <div class="case-card">
-
                     <img src="https://images.pexels.com/photos/6077326/pexels-photo-6077326.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Penal Económico">
-
                     <div class="case-content">
-
                         <div class="case-tag">LITIGIO COMPLEJO</div>
-
                         <div class="case-title">Penal Económico</div>
-
                         <div class="case-desc">Defensa penal corporativa y representación de directivos ante delitos económicos y tributarios complejos.</div>
-
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
     </section>
-
-
 
     <section id="equipo" class="section">
-
         <div class="container">
-
             <div class="section-header">
-
                 <h2>NUESTROS <span>EQUIPO</span></h2>
-
                 <div class="section-separator"></div>
-
             </div>
-
             <div class="team-grid">
-
                 
-
                 <div class="team-card" onclick="openModal(' Bruno Agüero', ' ', '<ul><li>Derecho Previsional y Retiros </li><li>Seguimiento de Litigios Civiles Complejos</li><li>Fusiones y Administracion de Empresas</li><li></li></ul>', 'bruno.jpg')">
-
                     <div class="card-image-wrapper">
-
                         <img src="bruno.jpg" alt="Bruno Agüero">
-
                     </div>
-
                     <div class="card-details">
-
                         <h4>Bruno Agüero</h4>
-
                         <div class="role">Especialista en Derecho Previsional</div>
-
                         
-
                         <ul class="team-skills">
-
                             <li>Jubilaciones & Pensiones</li>
-
                             <li>Reajustes de Haberes por Movilidad</li>
-
                             <li>Planificación de Retiro Complejos</li>
-
                             <li>Impugnación por Confiscatoriedad y Topes Máximos</li>
-
                         </ul>
-
                     </div>
-
                 </div>
-
-
 
                 <div class="team-card" onclick="openModal('Victoria Parellada', '', '<ul><li>Defensa Penal, Divorcios Contenciosos y Acuerdos</li><li>Sucesiones y Planificación Patrimonial</li><li>Régimen de Comunicación</li><li>Mediación Familiar Estratégica</li></ul>', 'victoria.jpg')">
-
                     <div class="card-image-wrapper">
-
                         <img src="victoria.jpg" alt="Victoria Parellada">
-
                     </div>
-
                     <div class="card-details">
-
                         <h4>Victoria Parellada</h4>
-
                         <div class="role"> PENAL, Familia & Sucesiones</div>
 
-
-
                         <ul class="team-skills">
-
                             <li>Delitos contra la Administracion Publica</li>
-
                             <li>Abuso Sexualr</li>
-
                             <li>Homicidios y lesiones</li>
-
                             <li>Delitos Federales</li>
-
                             <li>Divorcios y Acuerdos</li>
-
                             <li>Sucesiones</li>
-
                             <li>Mediación Familiar</li>
-
                             
-
                              
-
                             
-
                         </ul>
-
                     </div>
-
                 </div>
-
                 <div class="team-card" onclick="openModal('Juan Hierro', '', '<ul><li>Reajustes de Haberes Jubilatorios</li><li>Litigios Laborales y Despidos</li><li>Accidentes de Trabajo (ART)</li><li>Retiros Voluntarios Masivos</li></ul>', 'juanhierro.png')">
-
                     <div class="card-image-wrapper">
-
                         <img src="juanhierro.png" alt="Juan Hierro">
-
                     </div>
-
                     <div class="card-details">
-
                         <h4>Juan Hierro</h4>
-
                         <div class="role">Laboral, CONSUMO & Previsional</div>
 
-
-
                         <ul class="team-skills">
-
                             <li>Derecho Laboral</li>
-
                             <li>Jubilaciones y Pensiones</li>
-
                             <li>Reclamos ART</li>
-
                             <li>Reajustes de haberes jubilatorios</li>
-
                               <li>Acciones contra entidades financieras, empresas de servicios públicos,</li>
-
                                <li>Daños y perjuicios derivados de relaciones de consumo</li>
-
                                 <li>Reajustes de haberes jubilatorios</li>
-
                                  <li>Litigios laborales y despidos</li>
-
                             
-
                         </ul>
-
                     </div>
-
                 </div>
 
-
-
             </div>
-
         </div>
-
     </section>
-
-
 
     <section id="ramas" class="section">
-
         <div class="container" style="margin-bottom: 50px;">
-
             <div class="section-header">
-
                 <h2>ÁREAS DE <span>PRÁCTICA</span></h2>
-
                 <div class="section-separator"></div>
-
                 <p>Deslice sobre cada área para ver las materias.</p>
-
             </div>
-
         </div>
-
         <div class="practice-grid">
-
             <div class="practice-item">
-
                 <img src="https://images.pexels.com/photos/5668473/pexels-photo-5668473.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Penal">
-
                 <div class="practice-overlay">
-
                     <div class="practice-title">DERECHO PENAL</div>
-
                     <ul class="practice-list"><li>Defensas</li><li>Delitos Económicos</li><li>Querellas</li></ul>
-
                 </div>
-
             </div>
-
             <div class="practice-item">
-
                 <img src="https://images.pexels.com/photos/5926393/pexels-photo-5926393.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Previsional">
-
                 <div class="practice-overlay">
-
                     <div class="practice-title">PREVISIONAL</div>
-
                     <ul class="practice-list"><li>Jubilaciones</li><li>Reajustes</li><li>Retiros Voluntarios</li></ul>
-
                 </div>
-
             </div>
-
             <div class="practice-item">
-
                 <img src="https://images.pexels.com/photos/3760067/pexels-photo-3760067.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Civil">
-
                 <div class="practice-overlay">
-
                     <div class="practice-title">CIVIL Y COMERCIAL</div>
-
                     <ul class="practice-list"><li>Sucesiones</li><li>Contratos</li><li>Daños</li></ul>
-
                 </div>
-
             </div>
-
             <div class="practice-item">
-
                 <img src="https://images.pexels.com/photos/3771097/pexels-photo-3771097.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Familia">
-
                 <div class="practice-overlay">
-
                     <div class="practice-title">FAMILIA</div>
-
                     <ul class="practice-list"><li>Divorcios</li><li>Alimentos</li></ul>
-
                 </div>
-
             </div>
-
             <div class="practice-item">
-
                 <img src="https://images.pexels.com/photos/8145335/pexels-photo-8145335.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Laboral">
-
                 <div class="practice-overlay">
-
                     <div class="practice-title">LABORAL</div>
-
                     <ul class="practice-list"><li>Despidos</li><li>ART</li><li>Indemnizaciones</li></ul>
-
                 </div>
-
             </div>
-
              <div class="practice-item">
-
                 <img src="https://images.pexels.com/photos/4057663/pexels-photo-4057663.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Salud">
-
                 <div class="practice-overlay">
-
                     <div class="practice-title">AMPAROS</div>
-
                     <ul class="practice-list"><li>Salud</li><li>Cobertura Médica</li></ul>
-
                 </div>
-
             </div>
-
         </div>
-
     </section>
-
-
 
     <section id="contacto" class="contact-wrap">
-
         <div class="container">
-
             <div class="section-header">
-
                 <h2>CONTACTO <span>DIRECTO</span></h2>
-
                 <div class="section-separator"></div>
-
             </div>
-
             <form style="max-width: 600px; margin: auto; display: grid; gap: 20px;">
-
                 <input type="text" placeholder="NOMBRE COMPLETO">
-
                 <input type="email" placeholder="CORREO ELECTRÓNICO">
-
                 <textarea rows="4" placeholder="BREVE DESCRIPCIÓN DEL CASO"></textarea>
-
                 <button type="submit" class="btn-gold" style="margin-top: 20px; width: 100%; cursor: pointer;">ENVIAR CONSULTA</button>
-
             </form>
-
         </div>
-
     </section>
 
-
-
     <footer style="text-align: center; padding: 40px; font-size: 0.9rem; color: #fffcfc; border-top: 1px solid #d5d5d5;">
-
-        CELULARES 1128319760 o 2975019067 MAIL : Aguerosociedades@gmail.com
-
+        <li>CELULARES 1128319760 o 2975019067 MAIL : Aguerosociedades@gmail.com</li>
         &copy; 2024 Patagonia Legal Group. Chubut, Argentina.
-
     </footer>
 
-
-
     <div id="modalTeam" class="modal">
-
         <div class="modal-content">
-
             <span onclick="closeModal()" style="position:absolute; top:15px; right:20px; font-size:2rem; cursor:pointer; color: var(--gold-primary); z-index:10;">&times;</span>
-
             <div style="flex:1;"><img id="m-img" src="" style="width:100%; height:100%; object-fit:cover;"></div>
-
             <div style="flex:1.5; padding:40px; display:flex; flex-direction:column; justify-content:center;">
-
                 <h2 id="m-name" style="color:white; font-size:2rem; margin:0;"></h2>
-
                 <h4 id="m-role" style="color:var(--gold-primary); margin:10px 0 20px;"></h4>
-
                 <div id="m-desc" style="color:#ccc; font-size:1rem; line-height:1.8;"></div>
-
                 <a href="#contacto" onclick="closeModal()" class="btn-gold" style="width:fit-content; margin-top:20px; font-size:0.7rem;">Reservar Cita</a>
-
             </div>
-
         </div>
-
     </div>
 
-
-
     <script>
-
         // HEADER SCROLL
-
         window.addEventListener('scroll', () => {
-
             const header = document.querySelector('.main-header');
-
             if(window.scrollY > 50) header.classList.add('scrolled');
-
             else header.classList.remove('scrolled');
-
         });
 
-
-
         // SLIDER LOGIC - ACTUALIZADO PARA CAMBIAR VIDEO
-
         const slides = [
-
             { 
-
                 title: "DERECHO<br>PENAL", 
-
                 sub: "Preparacion de jucios y defensa  por jurado para proteger tu libertad.",
-
                 vidId: "vid-0" // ID del video correspondiente
-
             },
-
             { 
-
                 title: "DERECHO<br>PREVISIONAL", 
-
                 sub: "Expertos en jubilaciones y Retiros Voluntarios.",
-
                 vidId: "vid-1"
-
             },
-
             { 
-
                 title: "DERECHO CIVIL Y<br>COMERCIAL", 
-
                 sub: "Solucion patrimoniales y contratos complejos.",
-
                 vidId: "vid-2"
-
             }
-
         ];
 
-
-
         let currentSlide = 0;
-
         const titleEl = document.getElementById('hero-title');
-
         const subEl = document.getElementById('hero-subtitle');
-
         const containerEl = document.getElementById('hero-text-container');
 
-
-
         function changeSlide(direction) {
-
             // 1. Desvanecer Texto
-
             containerEl.classList.add('fade-out');
 
-
-
             setTimeout(() => {
-
                 currentSlide += direction;
-
                 if (currentSlide >= slides.length) currentSlide = 0;
-
                 if (currentSlide < 0) currentSlide = slides.length - 1;
 
-
-
                 // 2. Cambiar Texto
-
                 titleEl.innerHTML = slides[currentSlide].title;
-
                 subEl.innerHTML = slides[currentSlide].sub;
-
                 
-
                 // 3. CAMBIAR VIDEO (Crossfade)
-
                 // Primero quitamos la clase .active de todos los videos
-
                 document.querySelectorAll('.video-bg').forEach(v => v.classList.remove('active'));
-
                 
-
                 // Luego agregamos .active SOLO al video correspondiente
-
                 const nextVidId = slides[currentSlide].vidId;
-
                 document.getElementById(nextVidId).classList.add('active');
 
-
-
                 // 4. Reaparecer Texto
-
                 containerEl.classList.remove('fade-out');
-
             }, 500); // 500ms coincide con la transición del texto
-
         }
-
-
 
         // MODAL LOGIC
-
         const modal = document.getElementById('modalTeam');
-
         const mImg = document.getElementById('m-img');
-
         const mName = document.getElementById('m-name');
-
         const mRole = document.getElementById('m-role');
-
         const mDesc = document.getElementById('m-desc');
 
-
-
         function openModal(name, role, desc, img) {
-
             mName.innerText = name; 
-
             mRole.innerText = role; 
-
             mDesc.innerHTML = desc; 
-
             mImg.src = img;
-
             modal.style.display = 'flex';
-
             setTimeout(() => modal.style.opacity = '1', 10);
-
         }
-
         function closeModal() {
-
             modal.style.opacity = '0';
-
             setTimeout(() => modal.style.display = 'none', 300);
-
         }
-
         window.onclick = function(event) { if (event.target == modal) closeModal(); }
-
     </script>
-
 </body>
+</html>
